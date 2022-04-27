@@ -1,0 +1,27 @@
+Try
+	'call the SavefileDialog box runest
+	Save_file_Dialog.ShowDialog()
+	'Set the title
+	Save_file_Dialog.Title = "Save File"
+	'Set a specific filter
+	Save_file_Dialog.Filter = "(*.mdb)|*.accdb"
+	If Save_file_Dialog.ShowDialog = Windows.Forms.DialogResult.OK Then
+		'set the destination of a file
+		textboxDestination.Text = Save_file_Dialog.FileName
+		Dim portfolioPath As String = My.Application.Info.DirectoryPath
+		'create a backup by using Filecopy Command to copy the file from  location to destination
+		FileCopy(textboxlocation.Text, textboxDestination.Text)
+		MsgBox("Database Backup has been Created Successfully!")
+		'Reload the form
+		Call Form1_Load(sender, e)
+                'Clear content of those two textboxes
+		textboxlocation.Text = Nothing
+		textboxDestination.Text = "Destination..."
+	End If
+ 
+ 
+Catch ex As Exception
+	'catch some error that may occur
+	MsgBox(ex.Message)
+ 
+End Try
