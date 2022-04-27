@@ -1,0 +1,30 @@
+Try
+            'call the SavefileDialog box
+            Save_file_Dialog .ShowDialog()
+            'Set the title
+            Save_file_Dialog .Title = "Save File"
+            'Set a specific filter
+            Save_file_Dialog .Filter = "(*.mdb)|*.accdb"
+            If Save_file_Dialog.ShowDialog = Windows.Forms.DialogResult.OK Then
+                'set the destination of a file
+                txtDestination.Text = Save_file_Dialog .FileName
+                Dim portfolioPath As String = My.Application.Info.DirectoryPath
+                If MessageBox.Show("Restoring the database will erase any changes you have made since you last backup. Are you sure you want to do this?", "Confirm Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = Windows.Forms.DialogResult.OK Then
+                    'Restore the database from a backup copy. 
+                    FileCopy(textboxlocation.Text, textboxDestination.Text)
+                    MsgBox("Database Restoration Successful")
+ 
+                End If
+ 
+                'Reload the form
+                Call Form1_Load(sender, e)
+                textboxlocation.Text = Nothing
+                textboxDestination.Text = "Destination..."
+            End If
+ 
+ 
+        Catch ex As Exception
+            'catch some error that may occur
+            MsgBox(ex.Message)
+ 
+        End Try
